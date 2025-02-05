@@ -66,6 +66,7 @@ dependencies = [
 name = "bitcoin-uri-ffi"
 version = "0.1.0"
 dependencies = [
+ "bitcoin",
  "bitcoin_uri",
 ]
 
