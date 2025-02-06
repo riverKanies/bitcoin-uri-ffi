@@ -1,5 +1,12 @@
 # bitcoin-uri-ffi overview
 
+## Motivation + Plan
+
+Although payjoin-ffi depends on bitcoin_uri, it doesn’t export generic bitcoin_uri functions; it’s payjoin specific. We want to generalize it, then have payjoin-ffi depend on and re-export bitcoin-ffi.
+We want to get wallet developers using bitcoin-uri(-ffi) early and then it's easy to add payjoin later.
+
+so:
+
 We want to make a bindings library suite to parse and serialize bitcoin URIs based on bitcoin_uri:
 
 See https://github.com/payjoin/bitcoin_uri for the core crate.
@@ -48,7 +55,7 @@ cargo build
 
 ### Payjoin-flutter
 
-Mobile environments are a pain. I'm using android studio emulators for most all testing. I run the payjoin-flutter/example project in an emulator.
+Mobile environments are a pain. I'm using android studio emulators for most all testing. I run the payjoin-flutter/example project in two emulators, one for sender and one for receiver.
 
 ```
 cd payjoin-flutter/example

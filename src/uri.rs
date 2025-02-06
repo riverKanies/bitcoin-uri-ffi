@@ -21,7 +21,7 @@ impl Uri {
         match bitcoin_uri::Uri::from_str(uri.as_str()) {
             Ok(uri) => {
                 // Validate the network before converting to our Uri type
-                match uri.require_network(bitcoin::Network::Bitcoin) {
+                match uri.require_network(bitcoin_ffi::Network::Bitcoin) {
                     Ok(checked_uri) => Ok(checked_uri.into()),
                     Err(e) => Err(e.to_string()),
                 }
@@ -55,8 +55,8 @@ impl Uri {
 pub struct UriBuilder(bitcoin_uri::Uri<'static>);
 
 impl UriBuilder {
-    pub fn new(address: bitcoin::Address<bitcoin::address::NetworkChecked>) -> Self {
-        Self(bitcoin_uri::Uri::new(address))
+    pub fn new(address: bitcoin_ffi::Address) -> Self {
+        Self(bitcoin_uri::Uri::new(address.into()))
     }
 
     pub fn amount_sats(&mut self, amount: u64) -> &mut Self {

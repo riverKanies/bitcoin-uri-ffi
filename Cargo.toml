@@ -6,3 +6,4 @@ edition = "2021"
 [dependencies]
 bitcoin_uri = { git = "https://github.com/payjoin/bitcoin_uri" }
 bitcoin = { version = "0.32.0", default-features = false }
+bitcoin-ffi = { git = "https://github.com/bitcoindevkit/bitcoin-ffi" }
