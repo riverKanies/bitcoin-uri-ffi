@@ -3,17 +3,9 @@ use bitcoin_uri;
 use std::str::FromStr;
 
 extern crate alloc;
-
-
-use alloc::borrow::ToOwned;
-use alloc::borrow::Cow;
-#[cfg(feature = "non-compliant-bytes")]
-use alloc::vec::Vec;
 use alloc::string::String;
-#[cfg(feature = "non-compliant-bytes")]
-use either::Either;
-use core::convert::{TryFrom, TryInto};
-use bitcoin::address::NetworkValidation;
+
+pub use bitcoin_ffi::{Address, Network};
 
 
 #[derive(Clone)]
@@ -36,7 +28,7 @@ impl Uri {
         match bitcoin_uri::Uri::from_str(uri.as_str()) {
             Ok(uri) => {
                 // Validate the network before converting to our Uri type
-                match uri.require_network(bitcoin_ffi::Network::Bitcoin) {
+                match uri.require_network(Network::Bitcoin) {
                     Ok(checked_uri) => Ok(checked_uri.into()),
                     Err(e) => Err(e.to_string()),
                 }
@@ -70,7 +62,7 @@ impl Uri {
 pub struct UriBuilder(bitcoin_uri::Uri<'static>);
 
 impl UriBuilder {
-    pub fn new(address: bitcoin_ffi::Address) -> Self {
+    pub fn new(address: Address) -> Self {
         Self(bitcoin_uri::Uri::new(address.into()))
     }
 
@@ -97,7 +89,6 @@ impl UriBuilder {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::str::FromStr;
 
     #[test]
     fn just_address() {
@@ -222,7 +213,7 @@ mod tests {
     // Add new test for the builder pattern
     #[test]
     fn builder_pattern() {
-        let address = bitcoin_ffi::Address::new("1andreas3batLhQa2FawWjeyjCqyBzypd".to_string(), bitcoin_ffi::Network::Bitcoin).unwrap();
+        let address = Address::new("1andreas3batLhQa2FawWjeyjCqyBzypd".to_string(), Network::Bitcoin).unwrap();
         let uri = UriBuilder::new(address)
             .amount_sats(50_00_000_000)
             .label("Luke-Jr".to_string())
